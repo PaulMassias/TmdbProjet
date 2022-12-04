@@ -19,8 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import org.intellij.lang.annotations.JdkConstants
+import java.util.function.ToIntFunction
 
 
 @Composable
@@ -40,7 +42,9 @@ fun FilmsVue(windowClass:WindowSizeClass, navController: NavController, viewMode
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier =
-                    Modifier.padding(10.dp).padding(bottom = 40.dp)
+                    Modifier
+                        .padding(10.dp)
+                        .padding(bottom = 40.dp)
                 )
                 {
                     items(movies) { movie ->
@@ -48,9 +52,10 @@ fun FilmsVue(windowClass:WindowSizeClass, navController: NavController, viewMode
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(15.dp)
-                                .clickable{ },
+                                .clickable { navController.navigate("filmDetail/"+movie.id )},
                             elevation = 10.dp,
-                            backgroundColor = Color.LightGray
+                            backgroundColor = Color.LightGray,
+
                         ) {
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally
@@ -69,4 +74,6 @@ fun FilmsVue(windowClass:WindowSizeClass, navController: NavController, viewMode
             }
         }
     }
+
+
 

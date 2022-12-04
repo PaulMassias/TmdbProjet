@@ -7,7 +7,7 @@ class TmdbMovieResult(
 class TmdbMovie(
     var overview: String = "",
     val release_date: String = "",
-    val id: String = "",
+    val id: Int = 0,
     val title: String = "",
     val original_title: String = "",
     val backdrop_path: String? = "",

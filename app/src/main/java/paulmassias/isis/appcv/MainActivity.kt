@@ -26,14 +26,14 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.*
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import paulmassias.isis.appcv.ui.theme.AppCVTheme
+import java.util.function.ToIntFunction
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -96,12 +96,20 @@ fun NavigationHost(
     viewModel: MainViewModel,
     windowSizeClass: WindowSizeClass
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
 
     NavHost(navController = navController, startDestination = "profile") {
         composable("profile") { profil(windowSizeClass, navController) }
         composable("films") { FilmsVue(windowSizeClass, navController, viewModel) }
         composable("listeSerie") { SeriesVue(windowSizeClass , navController,viewModel )}
-        composable("listePersonnes") { PersonnesVue(viewModel )}
+        composable("listePersonnes") { PersonnesVue(viewModel ) }
+        composable("filmDetail/{id}",
+            arguments = listOf(navArgument("id"){
+                type = NavType.IntType
+            }))
+        {
+            FilmDetailVue(navController, viewModel, navBackStackEntry?.arguments?.getInt("id"))
+        }
     }
 }
 

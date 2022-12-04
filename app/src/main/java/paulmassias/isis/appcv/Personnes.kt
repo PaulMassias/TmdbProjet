@@ -56,7 +56,7 @@ fun PersonnesVue(viewModel: MainViewModel) {
                         ) {
 
                             AsyncImage(
-                                model = "https://image.tmdb.org/t/p/w300" + personne.backdrop_path,
+                                model = "https://image.tmdb.org/t/p/w300" + personne.profile_path,
                                 contentDescription = "Miniature de l'acteur"
                             )
                             Text(text = personne.name)

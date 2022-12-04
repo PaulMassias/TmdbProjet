@@ -22,4 +22,9 @@ interface API_TMDB {
     suspend fun searchmovies(@Query("api_key") api_key: String,
                              @Query("query") searchtext: String): TmdbMovieResult
 
+    @GET("movie/{movie_id}")
+    suspend fun detailmovies(@Path("movie_id") id: Int?,
+                             @Query("language") langage: String,
+                             @Query("api_key") api_key: String): TmdbMovie
+
 }

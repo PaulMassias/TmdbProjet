@@ -27,4 +27,15 @@ interface API_TMDB {
                              @Query("language") langage: String,
                              @Query("api_key") api_key: String): TmdbMovie
 
+    @GET("tv/{tv_id}")
+    suspend fun detailseries(@Path("tv_id") id: Int?,
+                             @Query("language") langage: String,
+                             @Query("api_key") api_key: String): TmdbSerie
+
+
+    @GET("person/{person_id}")
+    suspend fun detailperson(@Path("person_id") id: Int?,
+                             @Query("language") langage: String,
+                             @Query("api_key") api_key: String): TmdbPerson
+
 }

@@ -34,7 +34,9 @@ fun SeriesVue(windowClass: WindowSizeClass, navController: NavController, viewMo
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier =
-            Modifier.padding(10.dp).padding(bottom = 40.dp)
+            Modifier
+                .padding(10.dp)
+                .padding(bottom = 40.dp)
         )
         {
             items(series) { serie ->
@@ -42,7 +44,7 @@ fun SeriesVue(windowClass: WindowSizeClass, navController: NavController, viewMo
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(15.dp)
-                        .clickable { },
+                        .clickable { navController.navigate("serieDetail/" + serie.id) },
                     elevation = 10.dp,
                     backgroundColor = Color.LightGray
                 ) {

@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                             if (currentRoute != "profile") {
                                 TopAppBar(title = { Text("Futur barre de navigation") })
                             }
-                                 },
+                        },
                         content = {
                             NavigationHost(
                                 navController = navController,
@@ -79,17 +79,6 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
-
-
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    val windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(600.dp, 480.dp))
-}
-
-
 @Composable
 fun NavigationHost(
     navController: NavHostController,
@@ -101,29 +90,50 @@ fun NavigationHost(
     NavHost(navController = navController, startDestination = "profile") {
         composable("profile") { profil(windowSizeClass, navController) }
         composable("films") { FilmsVue(windowSizeClass, navController, viewModel) }
-        composable("listeSerie") { SeriesVue(windowSizeClass , navController,viewModel )}
-        composable("listePersonnes") { PersonnesVue(viewModel ) }
+        composable("listeSerie") { SeriesVue(windowSizeClass, navController, viewModel) }
+        composable("listePersonnes") { PersonnesVue(viewModel, navController) }
         composable("filmDetail/{id}",
-            arguments = listOf(navArgument("id"){
+            arguments = listOf(navArgument("id") {
                 type = NavType.IntType
-            }))
+            })
+        )
         {
             FilmDetailVue(navController, viewModel, navBackStackEntry?.arguments?.getInt("id"))
+        }
+        composable("serieDetail/{id}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.IntType
+            })
+        )
+        {
+
+            SerieDetailVue(navController, viewModel, navBackStackEntry?.arguments?.getInt("id"))
+
+        }
+        composable("personneDetail/{id}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.IntType
+            })
+        )
+        {
+
+            PersonDetailVue(navController, viewModel, navBackStackEntry?.arguments?.getInt("id"))
+
         }
     }
 }
 
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController){
-    BottomNavigation{
+fun BottomNavigationBar(navController: NavHostController) {
+    BottomNavigation {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = backStackEntry?.destination?.route
 
         NavBarItems.BarItems.forEach { navItem ->
 
             BottomNavigationItem(
-                selected = currentRoute == navItem.route ,
+                selected = currentRoute == navItem.route,
                 onClick = {
                     navController.navigate(navItem.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
@@ -136,8 +146,10 @@ fun BottomNavigationBar(navController: NavHostController){
                 },
 
                 icon = {
-                    Icon(imageVector = navItem.image,
-                        contentDescription = navItem.title)
+                    Icon(
+                        imageVector = navItem.image,
+                        contentDescription = navItem.title
+                    )
                 },
 
                 label = {
@@ -151,7 +163,7 @@ fun BottomNavigationBar(navController: NavHostController){
 
 
 @Composable
-fun topBar(){
+fun topBar() {
     TopAppBar(
         title = {
             Text(

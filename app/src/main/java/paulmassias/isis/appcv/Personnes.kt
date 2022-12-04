@@ -22,13 +22,13 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 
 @Composable
-fun PersonnesVue(viewModel: MainViewModel) {
+fun PersonnesVue(viewModel: MainViewModel, navController: NavController) {
 
     val personneslist by viewModel.personnes.collectAsState()
 
     if (personneslist.isEmpty()) {
         viewModel.getPersonnes()
-        } else {
+    } else {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
@@ -47,7 +47,7 @@ fun PersonnesVue(viewModel: MainViewModel) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(15.dp)
-                            .clickable { },
+                            .clickable { navController.navigate("personneDetail/" + personne.id) },
                         elevation = 10.dp,
                         backgroundColor = Color.LightGray
                     ) {

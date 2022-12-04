@@ -52,14 +52,14 @@ fun FilmsVue(windowClass:WindowSizeClass, navController: NavController, viewMode
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(15.dp)
-                                .clickable { navController.navigate("filmDetail/"+movie.id )},
+                                .clickable { navController.navigate("filmDetail/" + movie.id) },
                             elevation = 10.dp,
                             backgroundColor = Color.LightGray,
 
-                        ) {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
+                            ) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
 
                                 AsyncImage(
                                     model = "https://image.tmdb.org/t/p/w300/" + movie.backdrop_path,

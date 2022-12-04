@@ -6,7 +6,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
 
-
+//Défini les objets "NavBarItems" parcourus dans la BottomBar
 object NavBarItems {
     val BarItems = listOf(
         BarItem(

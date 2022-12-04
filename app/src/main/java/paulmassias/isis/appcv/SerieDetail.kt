@@ -29,19 +29,21 @@ import coil.compose.AsyncImage
 import org.intellij.lang.annotations.JdkConstants
 
 
+//Fonction-écran affichant le détail d'une série particulière
 @Composable
 fun SerieDetailVue(navController: NavController, viewModel: MainViewModel, id: Int?) {
 
     val serie by viewModel.serieForDetail.collectAsState()
 
     if (serie.id == 0) {
-        viewModel.getSerieDetail(id)
+        viewModel.getSerieDetail(id) // Méthode du viewModel qui récupére les données de la série
     } else {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
         ) {
+            // Retour a la page précédente via l'appel du navController
             Button(onClick = { navController.popBackStack("listeSerie", inclusive = false) }) {
                 Text(text = "Retour")
             }
@@ -53,25 +55,25 @@ fun SerieDetailVue(navController: NavController, viewModel: MainViewModel, id: I
             ) {
 
 
-                Text(
+                Text(// Nom de la série
                     text = serie.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 35.sp,
                     textAlign = TextAlign.Center
                 )
-                Text(
+                Text(// Première diffusion de la série
                     text = serie.first_air_date,
                     fontStyle = FontStyle.Italic,
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                AsyncImage(
+                AsyncImage(//Poster de la serie
                     model = "https://image.tmdb.org/t/p/original" + serie.poster_path,
                     contentDescription = "Poster de la série"
                 )
                 Card(backgroundColor = Color.LightGray) {
-                    Text(
+                    Text(//Synopsis de la série
                         modifier = Modifier.padding(all = 10.dp),
                         text = serie.overview,
                         fontSize = 25.sp

@@ -24,14 +24,14 @@ import coil.compose.AsyncImage
 import org.intellij.lang.annotations.JdkConstants
 import java.util.function.ToIntFunction
 
-
+//Fonction-écran affichant les films en tendances
 @Composable
 fun FilmsVue(windowClass:WindowSizeClass, navController: NavController, viewModel: MainViewModel){
 
     val movies by viewModel.movies.collectAsState()
 
     if (movies.isEmpty()){
-        viewModel.getMovies()
+        viewModel.getMovies()// Méthode du viewModel qui récupére les données des film
     }
     else {
             Column(
@@ -48,7 +48,7 @@ fun FilmsVue(windowClass:WindowSizeClass, navController: NavController, viewMode
                 )
                 {
                     items(movies) { movie ->
-                        Card(
+                        Card(  // Cartes clickables par films, redirigeant vers le détail du film via le navController
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(15.dp)
@@ -61,7 +61,7 @@ fun FilmsVue(windowClass:WindowSizeClass, navController: NavController, viewMode
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
 
-                                AsyncImage(
+                                AsyncImage( //Image du film suivie du titre et de la date de sortie
                                     model = "https://image.tmdb.org/t/p/w300/" + movie.backdrop_path,
                                     contentDescription = "Miniature du film"
                                 )

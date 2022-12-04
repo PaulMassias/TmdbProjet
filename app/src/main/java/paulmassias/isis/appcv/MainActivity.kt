@@ -14,6 +14,7 @@ import androidx.compose.material3.windowsizeclass.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,6 +53,7 @@ class MainActivity : ComponentActivity() {
                     val windowSizeClass = calculateWindowSizeClass(this)
                     val navBackStackEntry by navController.currentBackStackEntryAsState()
                     val currentRoute = navBackStackEntry?.destination?.route
+                    // Définition de la TopBar et appel de la BottomBar
                     Scaffold(
                         bottomBar = {
                             if (currentRoute != "profile") {
@@ -60,7 +62,7 @@ class MainActivity : ComponentActivity() {
                         },
                         topBar = {
                             if (currentRoute != "profile") {
-                                TopAppBar(title = { Text("Futur barre de navigation") })
+                                TopAppBar(title = { Text("Cin'API") })
                             }
                         },
                         content = {
@@ -78,7 +80,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
+// Création du controller de navigation
 @Composable
 fun NavigationHost(
     navController: NavHostController,
@@ -86,13 +88,14 @@ fun NavigationHost(
     windowSizeClass: WindowSizeClass
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-
+    //Définition des "routes" de l'application qui dirigeront vers les différents écrans via les fonctions-écrans
     NavHost(navController = navController, startDestination = "profile") {
         composable("profile") { profil(windowSizeClass, navController) }
         composable("films") { FilmsVue(windowSizeClass, navController, viewModel) }
         composable("listeSerie") { SeriesVue(windowSizeClass, navController, viewModel) }
         composable("listePersonnes") { PersonnesVue(viewModel, navController) }
-        composable("filmDetail/{id}",
+        composable(
+            "filmDetail/{id}", // Routes paticulières a argument
             arguments = listOf(navArgument("id") {
                 type = NavType.IntType
             })
@@ -100,7 +103,8 @@ fun NavigationHost(
         {
             FilmDetailVue(navController, viewModel, navBackStackEntry?.arguments?.getInt("id"))
         }
-        composable("serieDetail/{id}",
+        composable(
+            "serieDetail/{id}",
             arguments = listOf(navArgument("id") {
                 type = NavType.IntType
             })
@@ -110,7 +114,8 @@ fun NavigationHost(
             SerieDetailVue(navController, viewModel, navBackStackEntry?.arguments?.getInt("id"))
 
         }
-        composable("personneDetail/{id}",
+        composable(
+            "personneDetail/{id}",
             arguments = listOf(navArgument("id") {
                 type = NavType.IntType
             })
@@ -124,17 +129,19 @@ fun NavigationHost(
 }
 
 
+//Création de la BottomBar de navigation
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     BottomNavigation {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = backStackEntry?.destination?.route
 
+        //On utilise les NavBarItems de classe BarItem pour définir les icônes de navigation
         NavBarItems.BarItems.forEach { navItem ->
 
             BottomNavigationItem(
                 selected = currentRoute == navItem.route,
-                onClick = {
+                onClick = { //Routage des icônes
                     navController.navigate(navItem.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
@@ -145,14 +152,14 @@ fun BottomNavigationBar(navController: NavHostController) {
                     }
                 },
 
-                icon = {
+                icon = {// Image de l'icône
                     Icon(
                         imageVector = navItem.image,
                         contentDescription = navItem.title
                     )
                 },
 
-                label = {
+                label = {// Text de l'icône
                     Text(text = navItem.title)
                 },
             )
@@ -162,19 +169,7 @@ fun BottomNavigationBar(navController: NavHostController) {
 }
 
 
-@Composable
-fun topBar() {
-    TopAppBar(
-        title = {
-            Text(
-                text = "home"
-            )
-        },
-        actions = {
 
-        }
-    )
-}
 
 
 

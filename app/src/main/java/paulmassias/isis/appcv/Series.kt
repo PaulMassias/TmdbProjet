@@ -22,15 +22,19 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import org.intellij.lang.annotations.JdkConstants
 
+//Fonction-écran affichant les séries en tendances
 @Composable
-fun SeriesVue(windowClass: WindowSizeClass, navController: NavController, viewModel: MainViewModel){
+fun SeriesVue(
+    windowClass: WindowSizeClass,
+    navController: NavController,
+    viewModel: MainViewModel
+) {
 
     val series by viewModel.series.collectAsState()
 
-    if (series.isEmpty()){
-        viewModel.getSeries()
-    }
-    else {
+    if (series.isEmpty()) {
+        viewModel.getSeries()// Méthode du viewModel qui récupére les données des séries
+    } else {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier =
@@ -40,7 +44,7 @@ fun SeriesVue(windowClass: WindowSizeClass, navController: NavController, viewMo
         )
         {
             items(series) { serie ->
-                Card(
+                Card( // Cartes clickables par séries, redirigeant vers le détail de la série via le navController
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(15.dp)
@@ -52,7 +56,7 @@ fun SeriesVue(windowClass: WindowSizeClass, navController: NavController, viewMo
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        AsyncImage(
+                        AsyncImage(// Image de la série suivie du nom et de la date de première diffusion
                             model = "https://image.tmdb.org/t/p/w300/" + serie.backdrop_path,
                             contentDescription = "Miniature du film"
                         )

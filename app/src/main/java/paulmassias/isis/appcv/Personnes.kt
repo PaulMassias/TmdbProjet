@@ -21,13 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 
+//Fonction-écran affichant les acteurs en tendances
 @Composable
 fun PersonnesVue(viewModel: MainViewModel, navController: NavController) {
 
     val personneslist by viewModel.personnes.collectAsState()
 
     if (personneslist.isEmpty()) {
-        viewModel.getPersonnes()
+        viewModel.getPersonnes()// Méthode du viewModel qui récupére les données des acteurs
     } else {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -43,7 +44,7 @@ fun PersonnesVue(viewModel: MainViewModel, navController: NavController) {
             )
             {
                 items(personneslist) { personne ->
-                    Card(
+                    Card(// Cartes clickables par acteurss, redirigeant vers le détail de l'acteur via le navController
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(15.dp)
@@ -55,7 +56,7 @@ fun PersonnesVue(viewModel: MainViewModel, navController: NavController) {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
 
-                            AsyncImage(
+                            AsyncImage( //Image de l'acteur suivie de son nom
                                 model = "https://image.tmdb.org/t/p/w300" + personne.profile_path,
                                 contentDescription = "Miniature de l'acteur"
                             )

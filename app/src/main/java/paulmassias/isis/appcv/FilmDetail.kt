@@ -28,20 +28,21 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import org.intellij.lang.annotations.JdkConstants
 
-
+//Fonction-écran affichant le détail d'un film particulier
 @Composable
 fun FilmDetailVue(navController: NavController, viewModel: MainViewModel, id: Int?) {
 
     val movie by viewModel.movieForDetail.collectAsState()
 
     if (movie.id == 0) {
-        viewModel.getMovieDetail(id)
+        viewModel.getMovieDetail(id)  // Méthode du viewModel qui récupére les données du film
     } else {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
         ) {
+            // Retour a la page précédente via l'appel du navController
             Button(onClick = { navController.popBackStack("films", inclusive = false) }) {
                 Text(text = "Retour")
             }
@@ -53,25 +54,27 @@ fun FilmDetailVue(navController: NavController, viewModel: MainViewModel, id: In
             ) {
 
 
-                Text(
+                Text( // Titre du film
                     text = movie.title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 35.sp,
                     textAlign = TextAlign.Center
                 )
-                Text(
+                Text( // Date de sortie du film
                     text = movie.release_date,
                     fontStyle = FontStyle.Italic,
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                AsyncImage(
+
+                AsyncImage( // Poster du film
                     model = "https://image.tmdb.org/t/p/original" + movie.poster_path,
                     contentDescription = "Poster du film"
                 )
-                Card(backgroundColor = Color.LightGray) {
-                    Text(modifier = Modifier.padding(all = 10.dp),
+                Card(backgroundColor = Color.LightGray) { // Résumé du film
+                    Text(
+                        modifier = Modifier.padding(all = 10.dp),
                         text = movie.overview,
                         fontSize = 25.sp
                     )

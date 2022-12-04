@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,25 +21,24 @@ import androidx.navigation.NavController
 
 
 @Composable
-    fun profil(WindowSizeClass: WindowSizeClass, navController : NavController) {
+fun profil(WindowSizeClass: WindowSizeClass, navController: NavController) {
 
-
-        when (WindowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> {
+    //Condition sur le format de l'écran permettant d'adapter en cas de rotation de l'appareil
+    when (WindowSizeClass.widthSizeClass) {
+        WindowWidthSizeClass.Compact -> { // Lorsque l'affichage en largeur est compact - > le téléphone et debout
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            )
+            {
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.Top
-                )
-                {
-                    Row(Modifier.padding(bottom = 50.dp)) {
-                        Text(
-                            text = "Etudiant ingénieur ISIS",
-                            fontStyle = FontStyle.Italic,
-                            fontSize = 18.sp
-                        )
-                    }
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Image(
+                        // Image du profil
                         painterResource(R.drawable.index),
                         contentDescription = "Portrait",
                         modifier = Modifier
@@ -47,62 +47,75 @@ import androidx.navigation.NavController
                             .clip(CircleShape),
                     )
 
-                    Text(
+                    Text( // Nom du profil
                         text = "Paul Schwarzy",
-                        fontSize = 27.sp
+                        fontSize = 27.sp,
+                        textAlign = TextAlign.Center
+                    )
+                    Text( // Détails du profil
+                        text = "Etudiant ingénieur ISIS",
+                        fontStyle = FontStyle.Italic,
+                        textAlign = TextAlign.Center
                     )
 
-                    Text(text = "paul.massias36@gmail.com")
+                    Text( // Contact du profil
+                        text = "paul.massias36@gmail.com",
+                        textAlign = TextAlign.Center
+                    )
                     Button(
-                        onClick = {navController.navigate("films")},
-                        modifier = Modifier.padding(all = Dp(70F))
+
+                        // Entrée dans l'application par la page des films en tendance
+                        onClick = { navController.navigate("films") },
+
+                        modifier = Modifier.padding(all = Dp(100F))
                     )
                     {
                         Text(text = "Recruter")
                     }
                 }
-
             }
-            else -> {
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+
+        }
+        else -> { //C'est a dire tout autre type d'affichage que téléphone debout
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            )
+            {
+
+                Image(
+                    painterResource(R.drawable.index),
+                    contentDescription = "Portrait",
+                    modifier = Modifier
+                        .size(250.dp)
+                        .padding(20.dp)
+                        .clip(CircleShape),
+                )
+
+                Text(
+                    text = "Paul Schwarzy",
+                    fontSize = 27.sp
+                )
+                Row(Modifier.padding(bottom = 50.dp)) {
+                    Text(
+                        text = "Etudiant ingénieur ISIS",
+                        fontStyle = FontStyle.Italic,
+                        fontSize = 18.sp
+                    )
+                }
+
+                Text(text = "paul.massias36@gmail.com")
+
+                Button(
+                    onClick = {},
+                    modifier = Modifier.padding(all = Dp(70F))
                 )
                 {
+                    Text(text = "Recruter")
 
-                    Image(
-                        painterResource(R.drawable.index),
-                        contentDescription = "Portrait",
-                        modifier = Modifier
-                            .size(250.dp)
-                            .padding(20.dp)
-                            .clip(CircleShape),
-                    )
-
-                    Text(
-                        text = "Paul Schwarzy",
-                        fontSize = 27.sp
-                    )
-                    Row(Modifier.padding(bottom = 50.dp)) {
-                        Text(
-                            text = "Etudiant ingénieur ISIS",
-                            fontStyle = FontStyle.Italic,
-                            fontSize = 18.sp
-                        )
-                    }
-
-                    Text(text = "paul.massias36@gmail.com")
-
-                    Button(
-                        onClick = {},
-                        modifier = Modifier.padding(all = Dp(70F))
-                    )
-                    {
-                        Text(text = "Recruter")
-
-                    }
                 }
             }
         }
     }
+}

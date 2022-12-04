@@ -1,11 +1,11 @@
 # TmdbProjet
 
-##Fonctionnalités manquantes :
+## Fonctionnalités manquantes :
 -Recherche des entités
 
-##Fonctionnalités dégradées : 
+## Fonctionnalités dégradées : 
 -Adaptabilité
 
 
-##Problèmes rencontrés :
+## Problèmes rencontrés :
 Petit problème concernant l'affichage des films qui ont fait connaître un acteur
